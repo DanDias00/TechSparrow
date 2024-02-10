@@ -1,0 +1,1 @@
+‘fsfr kiut xiet nmmm’==>ENV[‘AUTH_TOKEN’]
