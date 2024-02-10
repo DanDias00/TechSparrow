@@ -8,6 +8,7 @@ class User extends CI_Controller {
         
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->library('EmailSender');
         $this->load->helper('url');
         $this->load->helper('url_helper');
         $this->load->service('user_service', '', TRUE);
@@ -23,9 +24,27 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|matches[password]');
 
         if ($this->form_validation->run() === TRUE) {
+            log_message('info', 'Registration form validation passed');
             if ($this->user_service->register($this->input->post('username'), $this->input->post('email'), $this->input->post('password'))) {
+                // Prepare the email content
+                $data = [
+                    'username' => $this->input->post('username'), // Assuming you want to use the username in your email
+                 
+                ];
+                $emailContent = $this->load->view('templates/registration_email', $data, TRUE);
+               // Send registration success email
+                $userEmail = $this->input->post('email');
+                if ($this->emailsender->sendRegistrationSuccessEmail($userEmail,$emailContent)) {
+                    log_message('info', 'Registration email sent to ' . $userEmail);
+                    $this->session->set_flashdata('email_sent', 'Registration successful. Please check your email for confirmation.');
+                } else {
+                    $this->session->set_flashdata('email_failed', 'Registration successful. However, we were unable to send a confirmation email.');
+                    log_message('error', 'Failed to send registration email to ' . $userEmail);
+                }
+
                 // Registration success
                 $this->session->set_flashdata('user_registered', 'You are now registered and can log in');
+                log_message('info', 'User registered: ' . $this->input->post('username'));
                 redirect('User/login');
             } else {
                 // Registration failed
