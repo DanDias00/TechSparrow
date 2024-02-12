@@ -13,12 +13,42 @@ class User extends CI_Controller {
 
     // Show registration page
     public function register() {
-        $this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+
+         // Set validation rules
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]');
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('password_confirm', 'Confirm Password', 'required|matches[password]');
 
-        if ($this->form_validation->run() === FALSE) {
+        if ($this->form_validation->run() === TRUE) {
+            log_message('info', 'Registration form validation passed');
+            if ($this->user_service->register($this->input->post('username'), $this->input->post('email'), $this->input->post('password'))) {
+                // Prepare the email content
+                $data = [
+                    'username' => $this->input->post('username'),
+                 
+                ];
+                $emailContent = $this->load->view('templates/registration_email', $data, TRUE);
+               // Send registration success email
+                $userEmail = $this->input->post('email');
+                if ($this->emailsender->sendRegistrationSuccessEmail($userEmail,$emailContent)) {
+                    log_message('info', 'Registration email sent to ' . $userEmail);
+                    $this->session->set_flashdata('email_sent', 'Registration successful. Please check your email for confirmation.');
+                } else {
+                    $this->session->set_flashdata('email_failed', 'Registration successful. However, we were unable to send a confirmation email.');
+                    log_message('error', 'Failed to send registration email to ' . $userEmail);
+                }
+
+                // Registration success
+                $this->session->set_flashdata('user_registered', 'You are now registered and can log in');
+                log_message('info', 'User registered: ' . $this->input->post('username'));
+                redirect('User/login');
+            } else {
+                // Registration failed
+                $this->session->set_flashdata('registration_failed', 'Registration failed. Please try again.');
+                redirect('register');
+            }
+        } else {
             $this->load->view('register');
         } else {
             $enc_password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
