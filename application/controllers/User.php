@@ -16,7 +16,7 @@ class User extends CI_Controller {
 
     // Show registration page
     public function register() {
-        // Assume validation and input processing here
+
          // Set validation rules
         $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]');
@@ -28,7 +28,7 @@ class User extends CI_Controller {
             if ($this->user_service->register($this->input->post('username'), $this->input->post('email'), $this->input->post('password'))) {
                 // Prepare the email content
                 $data = [
-                    'username' => $this->input->post('username'), // Assuming you want to use the username in your email
+                    'username' => $this->input->post('username'),
                  
                 ];
                 $emailContent = $this->load->view('templates/registration_email', $data, TRUE);
