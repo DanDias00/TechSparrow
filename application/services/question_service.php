@@ -9,19 +9,43 @@ class question_service{
       
     }
 
-    public function register($username, $email, $password) {
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    public function all_questions_service() {
+    
+        return $this->CI->Question_model->get_all_questions();
+    }
+
+    public function get_question_service($question_id) {
+        return $this->CI->Question_model->get_question($question_id);
+    }
+
+    public function submit_question_service($question, $user_id) {
         $data = array(
-            'username' => $username,
-            'email' => $email,
-            'password' => $password_hash,
+            'question' => $question,
+            'user_id' => $user_id
         );
-
-        return $this->CI->User_model->register($data);
+        return $this->CI->Question_model->submit_question($data);
     }
 
-    public function login($username, $password) {
-        return $this->CI->User_model->login($username, $password);
+  
+
+    public function search_questions_service($search) {
+        return $this->CI->Question_model->search_questions($search);
     }
+
+    public function get_user_questions_service($user_id) {
+        return $this->CI->Question_model->get_user_questions($user_id);
+    }
+
+    public function delete_question_service($question_id) {
+        return $this->CI->Question_model->delete_question($question_id);
+    }
+
+    public function update_question_service($question_id, $question) {
+        return $this->CI->Question_model->update_question($question_id, $question);
+    }
+
+
+
+
 }
 ?> 

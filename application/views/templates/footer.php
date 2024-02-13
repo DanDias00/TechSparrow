@@ -12,8 +12,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
       
+      body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
         .footer-container {
             text-align: center;
+        }
+        footer {
+            margin-top: auto; /* Push the footer to the bottom of the screen */
         }
         </style>
 </head>

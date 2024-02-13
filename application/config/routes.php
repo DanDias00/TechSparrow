@@ -52,3 +52,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Home/view';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// Custom routes
+$route['login'] = 'User/login';
+$route['questions'] = 'Questions/all_questions';
+$route['ask'] = 'Questions/ask_question';
+$route['register'] = 'User/register';
+$route['submit_question'] = 'Questions/submit_question';
+$route['view_question/(:any)'] = 'Questions/view_question/$1';
+$route['search'] = 'Questions/search';
+$route['user_questions'] = 'Questions/user_questions';
+$route['delete_question/(:any)'] = 'Questions/delete_question/$1';
+$route['update_question/(:any)'] = 'Questions/update_question/$1';
+$route['profile'] = 'User/profile';
+$route['logout'] = 'User/logout';
+$route['edit_profile'] = 'User/edit_profile';
+$route['update_profile'] = 'User/update_profile';
+
+
