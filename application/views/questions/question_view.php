@@ -74,10 +74,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <p><?php echo $question['body']; ?></p>
         </div>
 
-        <div class="question-meta">
-            <span><?php echo $question['answer_count']; ?> answers</span>
-           <!-- <span><?php echo $question['views']; ?> views</span> -->
-        </div>
+        <div class="question-meta d-flex justify-content-between">
+        <span><?php echo $question['answer_count']; ?> answers</span>
+        <!-- Assuming you have the username available -->
+        <span class="text-muted">Asked by: <?php echo $question['username']; ?></span>
+    </div>
     </div>
     <?php endforeach; ?>
     <?php else: ?>
