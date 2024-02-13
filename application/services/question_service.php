@@ -26,7 +26,6 @@ class question_service{
         return $this->CI->Question_model->submit_question($data);
     }
 
-  
 
     public function search_questions_service($search) {
         return $this->CI->Question_model->search_questions($search);

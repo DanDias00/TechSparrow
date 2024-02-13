@@ -80,7 +80,7 @@ class Questions extends CI_Controller {
             redirect('login');
         }
         $search = $this->input->get('q');
-        $data['questions'] = $this->question_service->search_service($search);
+        $data['questions'] = $this->question_service->search_questions_service($search);
         $this->load->view('templates/header');
         $this->load->view('questions/question_view', $data);
         $this->load->view('templates/footer');

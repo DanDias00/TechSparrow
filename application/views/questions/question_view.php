@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         body {
             font-family: "Poppins", sans-serif !important;
 			font-weight:400 !important;
-            background-color: antiquewhite !important; /* Override other styles */
+            background-color: antiquewhite !important;
         }
      
        .question{
@@ -56,13 +56,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="ask-header col-6 d-flex justify-content-center">
                  <!-- Search form -->
-                <form action="/questions/search" method="get" class="d-flex me-2">
+                <form action="search" method="get" class="d-flex me-2">
                     <input type="search" name="q" class="form-control" placeholder="Search questions...">
                     <button type="submit" class="btn btn-outline-success ml-2">Search</button>
                 </form>
-                <a href="/questions/ask_question" class="btn btn-warning">Ask a Question</a>
+                <a href="ask" class="btn btn-warning">Ask a Question</a>
             </div>
         </div>
+        <?php if (!empty($questions)): ?>
         <?php foreach ($questions as $question): ?>
         <div class="question mt-4">
         <div class="votes">
@@ -79,6 +80,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <?php endforeach; ?>
+    <?php else: ?>
+        <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+        <div class="text-center">
+            <h1>No questions found.</h1>
+            <a href="<?php echo base_url('index.php/questions'); ?>" class="btn btn-primary">Go to All Questions</a>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 </body>
 </html>

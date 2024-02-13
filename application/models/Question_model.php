@@ -20,10 +20,9 @@ public function submit_question($data) {
     return $this->db->insert('questions', $data);
 }
 
-
-
 public function search_questions($search) {
-    $this->db->like('question', $search);
+    $this->db->like('title', $search);
+    $this->db->or_like('body', $search);
     $query = $this->db->get('questions');
     return $query->result_array();
 }
