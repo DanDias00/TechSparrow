@@ -24,5 +24,18 @@ public function login($username, $password) {
         return false;
     }
 }
+
+public function get_user($username) {
+    $this->db->select('user_id'); // Specify the column you want to fetch
+    $this->db->where('username', $username);
+    $result = $this->db->get('users');
+
+    if ($result->num_rows() > 0) {
+        $row = $result->row();
+        return $row->user_id; // Return the user_id
+    } else {
+        return null; // Return null if user not found
+    }
+}
 }
 ?>

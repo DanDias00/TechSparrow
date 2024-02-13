@@ -24,5 +24,9 @@ class user_service{
     public function login($username, $password) {
         return $this->CI->User_model->login($username, $password);
     }
+
+    public function get_user_id($username) {
+        return $this->CI->User_model->get_user($username);
+    }
 }
 ?> 
