@@ -70,14 +70,18 @@ class User extends CI_Controller {
             // Validation successful
             $username = $this->input->post('username');
             $password = $this->input->post('password');
+            
 
             if ($this->user_service->login($username, $password)) {
                 // Login successful
                 $user_data = [
                     'username' => $username,
-                    'logged_in' => true
+                    'logged_in' => true,
+                    'user_id' => $this->user_service->get_user_id($username)
                 ];
                 $this->session->set_userdata($user_data);
+                log_message('debug', 'Session User ID: ' . $this->session->userdata('user_id'));
+                log_message('info', 'User logged in: ' .  $this->session->userdata('username'));
 
                 $this->session->set_flashdata('user_loggedin', 'You are now logged in.');
                 redirect('questions');

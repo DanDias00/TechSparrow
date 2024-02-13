@@ -11,6 +11,7 @@ class Questions extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('url_helper');
         $this->load->service('question_service', '', TRUE);
+        $this->load->service('answer_service', '', TRUE);
     }
 
     public function all_questions(){
@@ -32,8 +33,10 @@ class Questions extends CI_Controller {
             redirect('login');
         }
         $data['question'] = $this->question_service->get_question_service($question_id);
+        $data['answers'] = $this->answer_service->get_answers_service($question_id);
         $this->load->view('templates/header');
-        $this->load->view('questions/view_question', $data);
+        $this->load->view('questions/view_question', $data, $data);
+    
         $this->load->view('templates/footer');
          }
 
