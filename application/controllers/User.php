@@ -80,7 +80,7 @@ class User extends CI_Controller {
                 $this->session->set_userdata($user_data);
 
                 $this->session->set_flashdata('user_loggedin', 'You are now logged in.');
-                redirect('Home/view');
+                redirect('Home/questions_view');
             } else {
                 // Login failed
                 $this->session->set_flashdata('login_failed', 'Login is invalid. Please check your username and password.');

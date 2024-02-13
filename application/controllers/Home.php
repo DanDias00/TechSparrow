@@ -17,12 +17,11 @@ public function __construct() {
                 show_404();
         }
 
-        
-
         $this->load->view('templates/header');
         $this->load->view($page);
         $this->load->view('templates/footer');
 }
+
 
 }
 ?>
