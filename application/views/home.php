@@ -121,13 +121,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		body{
 			font-family: "Poppins", sans-serif;
 			font-weight:200;
+			display: flex;
+            flex-direction: column;
+            min-height: 100vh;
 		}
 		
 		.welcome-container{
 			background-color: antiquewhite;
-			background-size: cover;
-			background-position:center;
-			background-repeat: repeat;
 			
 		}
 		.welcome-container h2{
@@ -210,7 +210,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		Join us and be part of the global technical knowledge community!</p>
 	</div>
 	
-	<div class="row testimonial-container">
+	<div class="row testimonial-container mt-4">
     <div class="col-12">
         <h2 class="text-center mb-4">Customer Testimonials</h2>
         <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
