@@ -31,10 +31,23 @@ public function submit_question($data) {
 }
 
 public function search_questions($search) {
-    $this->db->like('title', $search);
-    $this->db->or_like('body', $search);
-    $query = $this->db->get('questions');
-    return $query->result_array();
+     // Select fields from the questions table and the username from the users table
+     $this->db->select('questions.*, users.username');
+    
+     // Perform a join with the users table where questions.user_id equals users.id
+     $this->db->join('users', 'users.user_id = questions.user_id');
+     
+     // Apply the search condition to the title and body fields
+     $this->db->group_start(); // Start grouping for OR condition
+     $this->db->like('questions.title', $search);
+     $this->db->or_like('questions.body', $search);
+     $this->db->group_end(); // End grouping
+     
+     // Get the result from the questions table
+     $query = $this->db->get('questions');
+     
+     // Return the result as an array of arrays
+     return $query->result_array();
 }
 
 public function get_user_questions($user_id) {

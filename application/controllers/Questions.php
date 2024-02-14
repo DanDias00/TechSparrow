@@ -12,6 +12,7 @@ class Questions extends CI_Controller {
         $this->load->helper('url_helper');
         $this->load->service('question_service', '', TRUE);
         $this->load->service('answer_service', '', TRUE);
+        $this->load->service('comment_service', '', TRUE);
     }
 
     public function all_questions(){
@@ -27,16 +28,34 @@ class Questions extends CI_Controller {
         }
 
         // View a question
-        public function view_question($question_id){
+    public function view_question($question_id){
         // Check if user is logged in
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
         $data['question'] = $this->question_service->get_question_service($question_id);
-        $data['answers'] = $this->answer_service->get_answers_service($question_id);
+        $answers = $this->answer_service->get_answers_service($question_id);
+        // Initialize an array to store the answers with their comments
+        $answers_with_comments = [];
+      
+        // Fetch comments for each answer and integrate them into the answers array
+        foreach ($answers as &$answer) {
+            
+            //$answer['comments'] = $this->comment_service->get_comments_by_answer_service($answer['id']);
+            $comments = $this->comment_service->get_comments_by_answer_service($answer['id']);
+
+            // Add comments to the answer array
+            $answer['comments'] = $comments;
+            // Append the answer with its comments to the answers_with_comments array
+            $answers_with_comments[] = $answer;
+            
+        }
+
+        // Assign the structured array to the data that will be passed to the view
+        $data['answers'] = $answers_with_comments;
+       
         $this->load->view('templates/header');
-        $this->load->view('questions/view_question', $data, $data);
-    
+        $this->load->view('questions/view_question', $data);
         $this->load->view('templates/footer');
          }
 
@@ -52,7 +71,6 @@ class Questions extends CI_Controller {
     }
 
     // Submit a question
-
     public function submit_question(){
         // Check if user is logged in
         if (!$this->session->userdata('logged_in')) {
