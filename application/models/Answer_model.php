@@ -11,7 +11,7 @@ public function save_answer($data) {
 }
 
 public function get_answers($question_id) {
-    $this->db->select('answers.body, users.username');
+    $this->db->select('answers.id,answers.body, users.username');
     $this->db->from('answers');
     $this->db->join('users', 'users.user_id = answers.user_id');
     $this->db->where('answers.question_id', $question_id);
