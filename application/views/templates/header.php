@@ -47,10 +47,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </ul>
     </div>
 
-   
-
     <!-- Brand logo -->
-    <a class="navbar-brand ms-auto" href="#">Logo</a>
+    <a class="navbar-brand ms-auto" href="/TechSparrow/"><img src="/TechSparrow/images/sparrow.jpg" alt="logo" height="30"></a>
   </div>
 </nav>
 
