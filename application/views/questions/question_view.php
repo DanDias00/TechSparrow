@@ -8,43 +8,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="UTF-8">
     <title>Question - Tech Sparrow</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href= "http://localhost/TechSparrow/css/question.css" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Protest+Strike&display=swap" rel="stylesheet">
 
     <style>
-
         body {
-            font-family: "Poppins", sans-serif !important;
-			font-weight:400 !important;
-            background-color: antiquewhite !important;
-        }
-     
-       .question{
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 20px;
-            background-color: white;
-      
-        }
-        .question-header h1{
-            font-family: "Poppins", sans-serif;
-			font-weight:800;
-        }
-        .votes{
-            margin-right: 20px;
-            text-align: center;
-        }
-        .question-content{
-            margin-right: 20px;
-            
-        }
-        .question-meta{
-            margin-top: 20px;
+    font-family: "Poppins", sans-serif !important;
+    font-weight:400 !important;
+    background-color: antiquewhite !important;
+}
 
-       }
+.question{
+    background-color:white;
+    padding:20px;
+    border-radius:20px;
+    margin-top:20px;
+}
+.question-header h1{
+    font-family: "Poppins", sans-serif;
+    font-weight:800;
+}
+.votes{
+    margin-right: 20px;
+    text-align: center;
+}
+.question-content{
+    margin-right: 20px;
+    
+}
+.question-meta{
+    margin-top: 20px;
+
+}
+        
     </style>
 </head>
 <body>
