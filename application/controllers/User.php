@@ -102,18 +102,23 @@ class User extends CI_Controller {
 
         // Set message
         $this->session->set_flashdata('user_loggedout', 'You are now logged out');
-        redirect('users/login');
+        redirect('Home/view');
+      
+        
     }
 
     // User profile
     public function profile() {
         // Ensure user is logged in
         if(!$this->session->userdata('logged_in')) {
+            log_message('error', 'User not logged in');
             redirect('users/login');
         }
 
+        log_message('info', 'User profile accessed: ' . $this->session->userdata('username'));
         // Get user data from model, pass to view
-        $data['user'] = $this->UserModel->get_user_info($this->session->userdata('user_id'));
-        $this->load->view('profile', $data);
+        $data['user'] = $this->user_service->get_user_info($this->session->userdata('user_id'));
+        log_message('debug', 'User data: ' . print_r($data['user'], TRUE));
+        $this->load->view('templates/profile', $data);
     }
 }

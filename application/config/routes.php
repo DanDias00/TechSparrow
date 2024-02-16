@@ -64,11 +64,23 @@ $route['search'] = 'Questions/search';
 $route['user_questions'] = 'Questions/user_questions';
 $route['delete_question/(:any)'] = 'Questions/delete_question/$1';
 $route['update_question/(:any)'] = 'Questions/update_question/$1';
-$route['profile'] = 'User/profile';
+$route['Myprofile'] = 'User/profile';
 $route['logout'] = 'User/logout';
 $route['edit_profile'] = 'User/edit_profile';
 $route['update_profile'] = 'User/update_profile';
 $route['submit_comment'] = 'comments/submit_comment';
+$route['submit_answer'] = 'answer/submit_answer';
+
+// Custom routes for header links
+$route['Home'] = 'Home/view';
+$route['contact'] = 'Home/contact';
+$route['privacy'] = 'Home/privacy';
+$route['terms'] = 'Home/terms';
+$route['faq'] = 'Home/faq';
+
+
+
+
 
 
 

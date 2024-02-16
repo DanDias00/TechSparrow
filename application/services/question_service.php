@@ -18,9 +18,10 @@ class question_service{
         return $this->CI->Question_model->get_question($question_id);
     }
 
-    public function submit_question_service($question, $user_id) {
+    public function submit_question_service($title,$question, $user_id) {
         $data = array(
-            'question' => $question,
+            'title'=>$title,
+            'body' => $question,
             'user_id' => $user_id
         );
         return $this->CI->Question_model->submit_question($data);

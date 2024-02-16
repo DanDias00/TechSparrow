@@ -23,13 +23,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             border-radius:20px;
         
         }
+
+        .answer-container{
+            width: 70vw;
+            height:10vh;
+        
+
+        }
         .comment{
             background-color:white;
             padding:10px;
             border-radius:10px;
             margin-top:2px;
+            width: 82vw;
+            max-width: 100%;
+            float:right;
            
         }
+
+        .vote-buttons {
+            width: 10vw;
+        }
+    
+        .form-group{
+            width: 82vw;
+            float:right;
+            
+            max-width: 100%;
+        }
+
+        .btn {
+           margin-left: 2.5vw;
+        }
+
         </style>
 </head>
 <body>
@@ -51,12 +77,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php if (!empty($answers)): ?>
                     <?php foreach ($answers as $answer): ?>
                         <div class="card mt-3">
-                            <div class="card-body">
-                                <?php echo $answer['body']; ?>
-                                <div class="d-flex justify-content-end">
-                                    <p class="text-muted mb-0">Answered by: <?php echo $answer['username']; ?></p>
-                                </div>
-                            </div>
+                        <div class="card-body">
+        <div class="row">
+            <!-- Answer Text Column -->
+            <div class="col-md-10"> <!-- Adjusted to take more space -->
+                <?php echo $answer['body']; ?>
+            </div>
+            
+            <!-- Voting Buttons Column -->
+            <div class="col-md-2"> <!-- Adjusted to take less space -->
+                <div class="vote-buttons text-center">
+                    <!-- Upvote Button -->
+                    <a href="<?php echo base_url('votes/upvote/' . $answer['id']); ?>" class="vote-up btn btn-link btn-sm mb-1">
+                        <i class="fa fa-caret-up fa-2x" aria-hidden="true">Upvote</i>
+                    </a>
+                    <!-- Vote Count -->
+                    <div class="vote-count">
+                        <?php echo 5; ?>
+                    </div>
+                    <!-- Downvote Button -->
+                    <a href="<?php echo base_url('votes/downvote/' . $answer['id']); ?>" class="vote-down btn btn-link btn-sm">
+                        <i class="fa fa-caret-down fa-2x" aria-hidden="true">Downvote</i>
+                    </a>
+                </div>
+                <div class="text-muted">Answered by: <?php echo $answer['username']; ?></div>
+            </div>
+        </div>
+    </div>
                         </div>
                         
                         <!-- Display comments -->
@@ -65,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="comment">
                                           <!-- Display comment details -->
                                             <?php echo $comment['body']; ?>
-                                            <div class="d-flex justify-content-end">
+                                            <div class="d-flex justify-content-end mr-4">
                                                  <p><small>Commented by: <?php echo $comment['username']; ?></small></p>
                                             </div>
                                         </div>
@@ -73,6 +120,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php endif; ?>
 
                             <!-- Comment submission form -->
+                            <div class="comment-form">
                             <form action="<?php echo base_url('index.php/submit_comment'); ?>" method="post">
                                     <input type="hidden" name="answer_id" value="<?php echo $answer['id']; ?>">
                                     <input type="hidden" name="question_id" value="<?php echo $question['id']; ?>">
@@ -81,6 +129,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <button type="submit" class="btn btn-primary mb-2">Comment</button>
                                 </form>
+                            </div>
 
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -90,7 +139,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div class="answer-form mt-4">
     <h4>Have a solution? Submit Your Answer</h4>
-    <form action="<?php echo base_url('index.php/answer/submit'); ?>" method="post">
+    <form action="<?php echo base_url('index.php/submit_answer'); ?>" method="post">
         <input type="hidden" name="question_id" value="<?php echo $question['id']; ?>">
         <div class="form-group">
             <textarea class="form-control" name="body" rows="3" required placeholder="Type your answer here..."></textarea>
