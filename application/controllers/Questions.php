@@ -77,20 +77,27 @@ class Questions extends CI_Controller {
             redirect('login');
         }
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('question', 'Question', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required|max_length[15]');
+        $this->form_validation->set_rules('body', 'Body', 'required|max_length[220]');
+        $this->form_validation->set_rules('tags', 'Tags', 'required');
+
         if ($this->form_validation->run() === FALSE) {
+            log_message('info', 'Validation failed');
             $this->load->view('templates/header');
             $this->load->view('questions/ask_question');
             $this->load->view('templates/footer');
         } else {
-            $question = $this->input->post('question');
+            $title = $this->input->post('title');
+            $question = $this->input->post('body');
             $user_id = $this->session->userdata('user_id');
-            if ($this->question_service->submit_question_service($question, $user_id)) {
+            if ($this->question_service->submit_question_service($title,$question, $user_id)) {
                 $this->session->set_flashdata('question_submitted', 'Question submitted successfully');
-                redirect('questions/all_questions');
+                log_message('info', 'Question submitted successfully');
+                redirect('questions');
             } else {
                 $this->session->set_flashdata('question_failed', 'Failed to submit question');
-                redirect('questions/ask_question');
+                log_message('error', 'Failed to submit question');
+                redirect('ask_question');
             }
         }
     }
