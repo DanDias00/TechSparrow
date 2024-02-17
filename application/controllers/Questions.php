@@ -63,8 +63,8 @@ class Questions extends CI_Controller {
             redirect('login');
         }
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('title', 'Title', 'required|max_length[15]');
-        $this->form_validation->set_rules('body', 'Body', 'required|max_length[220]');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('body', 'Body', 'required');
         $this->form_validation->set_rules('tags', 'Tags', 'required');
 
         if ($this->form_validation->run() === FALSE) {
