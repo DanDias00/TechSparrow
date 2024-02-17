@@ -32,10 +32,12 @@ class Answer extends CI_Controller {
 
         // Save the answer to the database
         if ($this->answer_service->save_answer_service($question_id, $answer_body,$user_id)) {
-            // Redirect back to the question view or display a success message
+            $this->answer_service->increment_answer_count_service($question_id);
+      
+          
             $this->session->set_flashdata('answer_submitted', 'Your answer has been submitted successfully.');
 
-            redirect('questions/');
+            redirect('questions');
         } else {
             // Handle errors or set flash data for errors
             $this->session->set_flashdata('answer_error', 'There was a problem submitting your answer. Please try again.');

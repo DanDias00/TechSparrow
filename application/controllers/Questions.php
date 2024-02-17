@@ -35,6 +35,7 @@ class Questions extends CI_Controller {
         }
         $data['question'] = $this->question_service->get_question_service($question_id);
         $answers = $this->answer_service->get_answers_service($question_id);
+        log_message('info', 'Answers: ' . json_encode($answers));
         // Initialize an array to store the answers with their comments
         $answers_with_comments = [];
       

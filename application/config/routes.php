@@ -69,7 +69,7 @@ $route['logout'] = 'User/logout';
 $route['edit_profile'] = 'User/edit_profile';
 $route['update_profile'] = 'User/update_profile';
 $route['submit_comment'] = 'comments/submit_comment';
-$route['submit_answer'] = 'answer/submit_answer';
+$route['submit_answer'] = 'answer/submit';
 
 // Custom routes for header links
 $route['Home'] = 'Home/view';

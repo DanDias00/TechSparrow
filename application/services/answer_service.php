@@ -22,6 +22,14 @@ class answer_service{
         return $this->CI->Answer_model->get_answers($question_id);
     }
 
+    public function increment_answer_count_service($question_id) {
+        return $this->CI->Answer_model->increment_answer_count($question_id);
+    }
+
+    public function get_answer_count_service($question_id) {
+        return $this->CI->Answer_model->get_answer_count($question_id);
+    }
+
   
 }
 ?>
