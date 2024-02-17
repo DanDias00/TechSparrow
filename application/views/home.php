@@ -226,53 +226,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="carousel-item active">
                     <div class="row align-items-center">
                         <div class="col-md-4">
-                            <img src="<?php echo base_url('images/sparrow.jpg'); ?>"class="d-block w-100" alt="Customer 1">
+                            <img src="<?php echo base_url('images/keegan.jpg'); ?>"class="d-block w-100" alt="Customer 1">
                         </div>
                         <div class="col-md-8">
                             <p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
 								voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
 								illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
-                            <em>- John Doe, CEO Wirklink</em>
+							<em>- Maya Stern, CTO Burkett Technologies -</em>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="row align-items-center">
-                        <div class="col-md-4">
-						<img src="<?php echo base_url('images/sparrow.jpg'); ?>" alt="Customer 2">
-                        </div>
-                        <div class="col-md-8">
-                            <p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
-								voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
-								illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
-                            <em>- Brian Hatten, Director Oracle</em>
-                        </div>
-                    </div>
+					<div class="row align-items-center">
+							<div class="col-md-4">
+							<img src="<?php echo base_url('images/daisy.jpg'); ?>"class="d-block w-100" alt="Customer 2">
+							</div>
+							<div class="col-md-8">
+								<p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
+									voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
+									illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
+								<em>- Daisy Jones, Actress -</em>
+							</div>
+						</div>
                 </div>
                 <div class="carousel-item">
                     <div class="row align-items-center">
                         <div class="col-md-4">
-						<img src="<?php echo base_url('images/sparrow.jpg'); ?>"class="d-block w-100" alt="Customer 3">
+						<img src="<?php echo base_url('images/reacher.jpg'); ?>"class="d-block w-100" alt="Customer 3">
                         </div>
                         <div class="col-md-8">
                             <p class="testimonial-text">"Sed ut perspiciatis unde omnis iste natus error sit 
 								voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
 								illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."</p>
-                            <em>- Maya Stern, CTO Burkett Technologies</em>
+                            <em> - Reacher, Actor - </em>
                         </div>
                     </div>
                 </div>
             </div>
             
             <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
