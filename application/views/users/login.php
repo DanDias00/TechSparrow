@@ -21,6 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         .social-login {
             margin-bottom: 1rem;
         }
+
+        
     </style>
 </head>
 <body>
@@ -54,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     Forgot <a href="#">password?</a>
                 </p>
                 <p class="text-right">
-                    Don't have an account? <a href="#">Sign up</a>
+                    Don't have an account? <a href="register">Sign up</a>
                 </p>
 
                 <?php echo form_close(); ?>
