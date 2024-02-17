@@ -5,7 +5,12 @@ public function __construct() {
     $this->load->database();
 }
 
-public function save_answer($data) {
+public function save_answer($question_id, $answer_body, $user_id) {
+    $data = array(
+        'question_id' => $question_id,
+        'body' => $answer_body,
+        'user_id' => $user_id
+    );
     return $this->db->insert('answers', $data);
 
 }
