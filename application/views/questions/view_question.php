@@ -67,7 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="question-meta">
             <span>Asked on <?php echo date('F j, Y', strtotime($question['created_at'])); ?></span>
-            <span> - <?php echo $question['answer_count']; ?> Answers</span>
+            <span> - <?php echo !empty($answers) ? $answers[0]['answer_count'] : '0'; ?> Answers</span>
+
         </div>
         </div>
     

@@ -6,12 +6,30 @@ class question_service{
     public function __construct() {
         $this->CI =& get_instance(); // Access the CI superobject
         $this->CI->load->model('Question_model');
+        $this->CI->load->service('answer_service', '', TRUE);
       
     }
 
     public function all_questions_service() {
     
-        return $this->CI->Question_model->get_all_questions();
+        $questions = $this->CI->Question_model->get_all_questions();
+        $questions_with_answer_count = [];
+
+        foreach ($questions as $question) {
+            // Assuming 'id' is the key for question_id in your question array
+            $question_id = $question['id'];
+            // Get the answer count for the current question
+            $answer_count = $this->CI->answer_service->get_answer_count_service($question_id);
+
+            // Add answer count to the question details
+            $question['answer_count'] = $answer_count;
+
+            // Append the modified question to the new array
+            $questions_with_answer_count[] = $question;
+        }
+
+        return $questions_with_answer_count;
+
     }
 
     public function get_question_service($question_id) {
