@@ -21,10 +21,10 @@ class Questions extends CI_Controller {
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
-        $data['questions'] = $this->question_service->all_questions_service();
+       
 
         $this->load->view('templates/header');
-        $this->load->view('questions/question_view', $data);
+        $this->load->view('questions/question_view');
         $this->load->view('templates/footer');
         }
 
