@@ -80,6 +80,10 @@ $route['faq'] = 'Home/faq';
 
 
 
+$route['api/questions'] = 'questions_api/questions';
+$route['api/questions/(:any)'] = 'questions_api/questions/$1';
+$route['answer']  = 'answer/submit';
+
 
 
 
