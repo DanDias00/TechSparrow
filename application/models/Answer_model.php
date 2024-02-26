@@ -16,7 +16,7 @@ public function save_answer($question_id, $answer_body, $user_id) {
 }
 
 public function get_answers($question_id) {
-    $this->db->select('answers.id,answers.body,answers.answer_count, users.username');
+    $this->db->select('answers.id,answers.body, users.username');
     $this->db->from('answers');
     $this->db->join('users', 'users.user_id = answers.user_id');
     $this->db->where('answers.question_id', $question_id);
@@ -29,24 +29,6 @@ public function get_answers($question_id) {
     }
 }
 
-public function increment_answer_count($question_id) {
-    $this->db->set('answer_count', 'answer_count+1', FALSE);
-    $this->db->where('question_id', $question_id);
-    $this->db->update('answers');
-}
-
-public function get_answer_count($question_id) {
-    $this->db->select('answer_count');
-    $this->db->from('answers');
-    $this->db->where('question_id', $question_id);
-    $query = $this->db->get();
-
-    if ($query->num_rows() > 0) {
-        return $query->row()->answer_count; // Return the answer count
-    } else {
-        return 0; // Return 0 if no answers are found
-    }
-}
     
 }
 ?>

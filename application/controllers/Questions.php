@@ -22,7 +22,6 @@ class Questions extends CI_Controller {
             redirect('login');
         }
        
-
         $this->load->view('templates/header');
         $this->load->view('questions/question_view');
         $this->load->view('templates/footer');
@@ -78,9 +77,11 @@ class Questions extends CI_Controller {
 
             $title = $this->input->post('title');
             $question = $this->input->post('body');
+            $tagString = $this->input->post('tags');
+            $tags = array_unique(array_map('trim', explode(',', $tagString))); // Split the string into an array, trim whitespace, and remove duplicates
             $user_id = $this->session->userdata('user_id');
 
-            if ($this->question_service->submit_question_service($title,$question, $user_id)) {
+            if ($this->question_service->submit_question_service($title,$question, $user_id,$tags)) {
 
                 $this->session->set_flashdata('question_submitted', 'Question submitted successfully');
                 log_message('info', 'Question submitted successfully');
