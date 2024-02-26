@@ -9,6 +9,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Log in - Tech Sparrow</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+
+body{
+
+background-color: antiquewhite;
+}
         .auth-wrapper {
             display: flex;
             justify-content: center;
@@ -16,7 +21,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             height: 100vh;
         }
         .auth-inner {
-            width: 300px;
+            width: 400px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
         }
         .social-login {
             margin-bottom: 1rem;
@@ -49,13 +57,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
 
                 <!-- Login Button -->
-                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                <button type="submit" class="btn btn-warning btn-block">Log in</button>
 
                 <!-- Additional Links -->
                 <p class="forgot-password text-right">
                     Forgot <a href="#">password?</a>
                 </p>
-                <p class="text-right">
+                <p style="text-align:center;">
                     Don't have an account? <a href="register">Sign up</a>
                 </p>
 

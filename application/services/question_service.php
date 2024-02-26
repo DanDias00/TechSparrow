@@ -7,19 +7,21 @@ class question_service{
         $this->CI =& get_instance(); // Access the CI superobject
         $this->CI->load->model('Question_model');
         $this->CI->load->service('answer_service', '', TRUE);
+        $this->CI->load->service('question_service', '', TRUE);
       
     }
 
     public function all_questions_service() {
     
         $questions = $this->CI->Question_model->get_all_questions();
+        //log_message($questions, 'debug');
         $questions_with_answer_count = [];
 
         foreach ($questions as $question) {
             // Assuming 'id' is the key for question_id in your question array
             $question_id = $question['id'];
             // Get the answer count for the current question
-            $answer_count = $this->CI->answer_service->get_answer_count_service($question_id);
+            $answer_count = $this->CI->question_service->get_answer_count_service($question_id);
 
             // Add answer count to the question details
             $question['answer_count'] = $answer_count;
@@ -36,13 +38,17 @@ class question_service{
         return $this->CI->Question_model->get_question($question_id);
     }
 
-    public function submit_question_service($title,$question, $user_id) {
+    public function submit_question_service($title,$question, $user_id,$tags) {
+
+        
         $data = array(
             'title'=>$title,
             'body' => $question,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+        
+
         );
-        return $this->CI->Question_model->submit_question($data);
+        return $this->CI->Question_model->submit_question($data,$tags);
     }
 
 
@@ -62,6 +68,9 @@ class question_service{
         return $this->CI->Question_model->update_question($question_id, $question);
     }
 
+    public function get_answer_count_service($question_id) {
+        return $this->CI->Question_model->get_answer_count($question_id);
+    }
 
 
 

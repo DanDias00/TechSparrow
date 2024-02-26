@@ -38,7 +38,7 @@
             </div>
             
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Submit Your Question</button>
+            <button type="submit" class="btn btn-warning">Submit Your Question</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

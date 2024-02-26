@@ -9,6 +9,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Register - Tech Sparrow</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+
+        body{
+
+            background-color: antiquewhite;
+        }
         .auth-wrapper {
             display: flex;
             justify-content: center;
@@ -16,7 +21,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             height: 100vh;
         }
         .auth-inner {
-            width: 300px;
+            width: 400px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
         }
         .social-login {
             margin-bottom: 1rem;
@@ -59,14 +67,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
 
                 <!-- Login Button -->
-                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                <button type="submit" class="btn btn-warning btn-block">Sign in</button>
 
                 <!-- Additional Links -->
-                <p class="forgot-password text-right">
+                <p class="forgot-password text-right pt-2">
                     Forgot <a href="#">password?</a>
                 </p>
-                <p class="text-right">
-                    Already an account? <a href="login">Log in</a>
+                <p style="text-align:center;">
+                    Already have an account? <a href="login">Log in</a>
                 </p>
 
                 <?php echo form_close(); ?>
