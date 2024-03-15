@@ -26,7 +26,7 @@ class user_service{
     }
 
     public function get_user_id($username) {
-        return $this->CI->User_model->get_user($username);
+        return $this->CI->User_model->get_user_id($username);
     }
 
     public function get_user_info($user_id) {

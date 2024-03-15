@@ -25,7 +25,7 @@ public function login($username, $password) {
     }
 }
 
-public function get_user($username) {
+public function get_user_id($username) {
     $this->db->select('user_id');
     $this->db->where('username', $username);
     $result = $this->db->get('users');
@@ -48,5 +48,25 @@ public function get_user_by_id($user_id) {
         return null;
     }
 }
+public function get_user_by_email($email) {
+    $this->db->from('users');
+    $this->db->where('email', $email);
+    $query = $this->db->get();
+
+    // Check if a user was found
+    if ($query->num_rows() == 1) {
+        return $query->row(); // Return the user object
+    } else {
+        return FALSE; // No user found
+    }
+}
+public function update_password($user_id, $password) {
+    $this->db->where('user_id', $user_id);
+    $this->db->update('users', ['password' => $password]);
+    return $this->db->affected_rows() > 0;
+}
 }
 ?>
+
+
+
