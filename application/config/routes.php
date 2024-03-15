@@ -54,11 +54,12 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // Custom routes
-$route['login'] = 'User/login';
+
+
 $route['questions'] = 'Questions/all_questions';
 $route['ask'] = 'Questions/ask_question';
 $route['register'] = 'User/register';
-$route['submit_question'] = 'Questions/submit_question';
+//$route['submit_question'] = 'Questions/submit_question';
 $route['view_question/(:any)'] = 'Questions/view_question/$1';
 $route['search'] = 'Questions/search';
 $route['user_questions'] = 'Questions/user_questions';
@@ -83,6 +84,18 @@ $route['faq'] = 'Home/faq';
 $route['api/questions'] = 'questions_api/questions';
 $route['api/questions/(:any)'] = 'questions_api/questions/$1';
 $route['answer']  = 'answer/submit';
+
+//for backbone js
+$route['login'] = 'api/User/login';
+$route['register'] = 'api/User/register';
+$route['forgot_password'] = 'api/User/forgot_password';
+$route['reset_password'] ='api/User/reset_password';
+$route['answer'] = 'api/Answer/submit';
+$route['comment'] = 'api/Comments/submit';
+$route['submit_question'] = 'questions_api/submit_question';
+
+
+
 
 
 
