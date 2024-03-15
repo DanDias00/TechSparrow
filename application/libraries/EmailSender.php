@@ -39,4 +39,8 @@ class EmailSender {
         $subject = 'Registration Confirmation';
         return $this->sendMail($to, $subject, $message);
     }
+    public function passwordResetEmail($to, $message) {
+        $subject = 'Credentials Reset Instructions';
+        return $this->sendMail($to, $subject, $message);
+    }
 }
