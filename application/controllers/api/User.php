@@ -44,7 +44,7 @@ class User extends REST_Controller {
 
     // Show registration page
     public function register_post() {
-        log_message('debug', 'POST Data: ' . print_r($this->input->post(), TRUE));
+       // log_message('debug', 'POST Data: ' . print_r($this->input->post(), TRUE));
 
 
          // Set validation rules
@@ -162,53 +162,22 @@ class User extends REST_Controller {
 
     //password reset
     public function forgot_password_post() {
-       
-        // Set form validation for email
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
         
         if ($this->form_validation->run() === FALSE) {
-            // Form validation failed
             $this->response([
                 'status' => FALSE,
                 'message' => validation_errors()
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $email = $this->input->post('email');
-            // Check if the email exists in the database
-            $user = $this->User_model->get_user_by_email($email);
-            
-            if ($user) {
-                
-                $reset_link = 'http://localhost/TechSparrowFrontend/public/#reset_password/' . $user->user_id;
-                $email_content = $this->load->view('templates/password_reset_email', [
-                    'reset_link' => $reset_link,
-                    'username' => $user->username
-                ], TRUE);
-
-                if ($this->emailsender->passwordResetEmail($email,$email_content)) {
-                    // Email sent successfully
-                    $this->response([
-                        'status' => TRUE,
-                        'message' => 'Password reset instructions have been sent to ' . $email
-                    ], REST_Controller::HTTP_OK);
-                } else {
-                    // Email failed to send
-                    $this->response([
-                        'status' => FALSE,
-                        'message' => 'Failed to send password reset instructions.'
-                    ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
-                }
-            } else {
-                // No user found with that email
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'No account found with that email address.'
-                ], REST_Controller::HTTP_NOT_FOUND);
-            }
+            $result = $this->user_service->forgotPassword($email);
+            $this->response($result, $result['status'] ? REST_Controller::HTTP_OK : REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function reset_password_post() {
+        
         // Set form validation for password
         $this->form_validation->set_rules('password', 'Password', 'required');
 

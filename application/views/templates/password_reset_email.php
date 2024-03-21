@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <a href="<?php echo $reset_link; ?>" class="button">Reset Password</a>
 
-    <p>you received this email because you have requsted credential reset. If you did not make this request, please ignore this email.</p>
+    <p>You received this email because you have requested credential reset. If you did not make this request, please ignore this email.</p>
 
     <p>Best Regards,<br>
     The Tech Sparrow Team </p>

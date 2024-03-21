@@ -80,24 +80,48 @@ public function submit_question($data,$tags) {
 }
 
 public function search_questions($search) {
-     // Select fields from the questions table and the username from the users table
-     $this->db->select('questions.*, users.username');
-    
-     // Perform a join with the users table where questions.user_id equals users.id
-     $this->db->join('users', 'users.user_id = questions.user_id');
-     
-     // Apply the search condition to the title and body fields
-     $this->db->group_start(); // Start grouping for OR condition
-     $this->db->like('questions.title', $search);
-     $this->db->or_like('questions.body', $search);
-     $this->db->group_end(); // End grouping
-     
-     // Get the result from the questions table
-     $query = $this->db->get('questions');
-     
-     // Return the result as an array of arrays
-     return $query->result_array();
+    // Selecting question data along with the associated username and concatenated tags
+    $this->db->select('
+        questions.*, 
+        users.username,
+        GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ", ") AS tags'
+    );
+    $this->db->from('questions');
+    $this->db->join('users', 'users.user_id = questions.user_id');
+
+    // Join with the question_tags intermediate table and then tags table to get the tags
+    $this->db->join('question_tags', 'question_tags.question_id = questions.id', 'left');
+    $this->db->join('tags', 'tags.id = question_tags.tag_id', 'left');
+
+    // Apply the search condition to the title and body fields
+    $this->db->group_start(); // Start grouping for OR condition
+    $this->db->like('questions.title', $search);
+    $this->db->or_like('questions.body', $search);
+    $this->db->group_end(); // End grouping
+
+    // Group by question ID to aggregate all tags for each question
+    $this->db->group_by('questions.id');
+    $this->db->order_by('questions.created_at', 'DESC'); // Optional: order the questions
+
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        $questions = $query->result_array();
+        
+        // Process tags to be an array if needed
+        foreach ($questions as &$question) {
+            if (!empty($question['tags'])) {
+                $question['tags'] = explode(', ', $question['tags']);
+            } else {
+                $question['tags'] = [];
+            }
+        }
+        return $questions; // Return the array of questions with usernames and tags
+    } else {
+        return array(); // Return an empty array if no questions are found
+    }
 }
+
 
 public function get_user_questions($user_id) {
     $this->db->order_by('created_at', 'DESC');
