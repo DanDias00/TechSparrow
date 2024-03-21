@@ -1,7 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require APPPATH . 'libraries/REST_Controller.php';
+require APPPATH . 'libraries/Format.php';
 
-class User extends CI_Controller {
+use Restserver\Libraries\REST_Controller;
+class User extends REST_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -80,7 +83,7 @@ class User extends CI_Controller {
       
 
     // User login
-    public function login() {
+    public function login_post() {
         // Set validation rules
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -107,17 +110,19 @@ class User extends CI_Controller {
                 log_message('info', 'User logged in: ' .  $this->session->userdata('username'));
 
                 $this->session->set_flashdata('user_loggedin', 'You are now logged in.');
-                redirect('questions');
+                $this->response(['status' => 'success', 'message' => 'Operation completed.'], REST_Controller::HTTP_OK);
+
             } else {
                 // Login failed
                 $this->session->set_flashdata('login_failed', 'Login is invalid. Please check your username and password.');
-                redirect('login');
+                $this->response(['status' => 'error', 'message' => 'Authentication failed. Invalid username or password.'], REST_Controller::HTTP_UNAUTHORIZED);
+
                 }
             }
     }
 
     // Logout user
-    public function logout() {
+    public function logout_get() {
         // Unset user data
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('user_id');

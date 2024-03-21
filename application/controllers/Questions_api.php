@@ -64,7 +64,6 @@ class Questions_api extends REST_Controller {
             $this->response($questions, REST_Controller::HTTP_OK);
         } else {
             // No questions found, send a 404 Not Found status
-         
             $this->response([
                 'status' => FALSE,
                 'message' => 'No questions were found'
@@ -72,7 +71,7 @@ class Questions_api extends REST_Controller {
         }
     }
 
-    public function view_question_get($question_id){ // Notice the _get suffix to denote a GET request
+    public function view_question_get($question_id){
         // Check if user is logged in
         if (!$this->session->userdata('logged_in')) {
             // Respond with 401 Unauthorized
@@ -135,7 +134,45 @@ class Questions_api extends REST_Controller {
                // redirect('ask_question');
             }
         }
+
+
+        public function search_get() {
+            // Check if the user is logged in
+            if (!$this->session->userdata('logged_in')) {
+                // If not logged in, send an unauthorized status code and message
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'User not logged in'
+                ], REST_Controller::HTTP_UNAUTHORIZED);
+                return;
+            }
+        
+            // Get the search term from the query parameters
+            $search = $this->input->get('q');
+            if(!$search) {
+                // If the search term is not provided, send a bad request status code and message
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'No search query provided'
+                ], REST_Controller::HTTP_BAD_REQUEST);
+                return;
+            }
+        
+            // Use the question service to search for questions
+            $questions = $this->question_service->search_questions_service($search);
+            if($questions) {
+                // If questions are found, send them with an OK status code
+                $this->response( $questions, REST_Controller::HTTP_OK);
+            } else {
+                // If no questions are found, send a not found status code and message
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'No questions found'
+                ], REST_Controller::HTTP_NOT_FOUND);
+            }
+        }
     }
+        
 
     
     
