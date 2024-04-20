@@ -13,6 +13,7 @@ class Answer extends REST_Controller {
         $this->load->helper('url');
         $this->load->helper('url_helper');
         $this->load->service('answer_service', '', TRUE);
+        $this->load->service('vote_service', '', TRUE);
         
     }
 
@@ -41,4 +42,56 @@ class Answer extends REST_Controller {
                 redirect('questions/view_question/' . $question_id);
             }
         }
-}
+
+
+        public function vote_post() {
+            if (!$this->session->userdata('logged_in')) {
+                $this->response(['status' => 'error', 'message' => 'User not logged in'], REST_Controller::HTTP_UNAUTHORIZED);
+                return;
+            }
+            $answer_id = $this->post('answer_id');
+            $user_id = $this->post('user_id');
+            $type = $this->uri->segment(3);
+          
+            log_message('debug', 'Answer ID: ' . $answer_id);
+            log_message('debug', 'Vote type: ' . $type);
+            log_message('debug', 'User ID: ' . $user_id);
+          
+
+            // Check if the user has already voted on this answer
+            if ($this->vote_service->hasVotedService($answer_id, $user_id)) {
+                $this->response(['status' => 'error', 'message' => 'User has already voted on this answer'], REST_Controller::HTTP_BAD_REQUEST);
+                return;
+            }
+            
+            $new_vote_count = NULL;
+    
+            if ($type === 'upvote') {
+                $new_vote_count = $this->vote_service->upvote($answer_id);
+            } elseif ($type === 'downvote') {
+                $new_vote_count = $this->vote_service->downvote($answer_id);
+            } else {
+                $this->response(['status' => 'error', 'message' => 'Invalid vote type'], REST_Controller::HTTP_BAD_REQUEST);
+                return;
+            }
+    
+            if ($new_vote_count !== NULL) {
+                $this->response(['status' => 'success', 'vote_count' => $new_vote_count], REST_Controller::HTTP_OK);
+            } else {
+                $this->response(['status' => 'error', 'message' => 'Voting failed'], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+          //  If the voting process was successful, insert a record into the user votes table
+            if ($new_vote_count !== NULL) {
+                // Insert record into the user votes table
+                $this->vote_service->insertUserVoteService($user_id, $answer_id, $type);
+                // Return the updated vote count
+                $this->response(['status' => 'success', 'vote_count' => $new_vote_count], REST_Controller::HTTP_OK);
+            } else {
+                $this->response(['status' => 'error', 'message' => 'Voting failed'], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+        
+          
+    }
+        
