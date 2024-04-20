@@ -45,8 +45,21 @@ public function get_all_questions() {
     
 
 public function get_question($question_id) {
+    // Fetch the question details
     $query = $this->db->get_where('questions', array('id' => $question_id));
-    return $query->row_array();
+    $question = $query->row_array();
+
+    // Fetch the count of answers for the given question ID
+    $this->db->select('COUNT(id) AS answer_count');
+    $this->db->from('answers');
+    $this->db->where('question_id', $question_id);
+    $query = $this->db->get();
+    $answer_count = $query->row()->answer_count;
+
+    // Add the answer count to the question array
+    $question['answer_count'] = $answer_count;
+
+    return $question;
 }
 
 public function submit_question($data,$tags) {
@@ -149,9 +162,9 @@ public function increment_answer_count($question_id) {
 }
 
 public function get_answer_count($question_id) {
-    $this->db->select('answer_count');
-    $this->db->from('questions');
-    $this->db->where('id', $question_id);
+    $this->db->select('COUNT(id) AS answer_count'); // Select the count of answers
+    $this->db->from('answers'); // Select from the answers table
+    $this->db->where('question_id', $question_id); // Filter by the given question ID
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
@@ -160,7 +173,6 @@ public function get_answer_count($question_id) {
         return 0; // Return 0 if no answers are found
     }
 }
-
 
 }
 
