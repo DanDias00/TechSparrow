@@ -19,7 +19,25 @@ public function submit_vote($answer_id, $user_id, $vote) {
             'user_id' => $user_id,
             'vote' => $vote
         ]);
-    }
+    }    
+}
+
+
+public function hasVoted($answer_id, $user_id) {
+    $this->db->where('answer_id', $answer_id);
+    $this->db->where('user_id', $user_id);
+    $query = $this->db->get('votes');
+
+    return $query->num_rows() > 0;
+}
+public function saveVoteDetails($user_id,$answer_id, $vote) {
+    $data = array(
+        'user_id' => $user_id,
+        'answer_id' => $answer_id,
+        'vote_type' => $vote
+    );
+    return $this->db->insert('votes', $data);
+
 }
 }
 ?>
