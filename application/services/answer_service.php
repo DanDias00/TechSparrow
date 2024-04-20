@@ -22,7 +22,7 @@ class answer_service{
         
         if ($this->CI->Answer_model->save_answer($question_id, $answer_body, $user_id)) {
             //increment answer count in questions table
-            $this->CI->Question_model->increment_answer_count($question_id);
+           // $this->CI->Question_model->increment_answer_count($question_id);
             return ['success' => true, 'message' => 'Your answer has been submitted successfully.'];
         } else {
             return ['success' => false, 'message' => 'There was a problem submitting your answer. Please try again.'];
