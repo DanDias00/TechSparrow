@@ -65,7 +65,7 @@ $route['search'] = 'Questions/search';
 $route['user_questions'] = 'Questions/user_questions';
 $route['delete_question/(:any)'] = 'Questions/delete_question/$1';
 $route['update_question/(:any)'] = 'Questions/update_question/$1';
-$route['Myprofile'] = 'User/profile';
+#$route['Myprofile'] = 'User/profile';
 $route['logout'] = 'User/logout';
 $route['edit_profile'] = 'User/edit_profile';
 $route['update_profile'] = 'User/update_profile';
@@ -86,13 +86,20 @@ $route['api/questions/(:any)'] = 'questions_api/questions/$1';
 $route['answer']  = 'answer/submit';
 
 //for backbone js
+$route['profile'] = 'api/User/profile';
 $route['login'] = 'api/User/login';
 $route['register'] = 'api/User/register';
+$route['logout'] = 'api/User/logout';
+$route['delete_account/(:num)'] = 'api/User/delete/$1';
 $route['forgot_password'] = 'api/User/forgot_password';
 $route['reset_password'] ='api/User/reset_password';
 $route['answer'] = 'api/Answer/submit';
 $route['comment'] = 'api/Comments/submit';
-$route['submit_question'] = 'questions_api/submit_question';
+$route['question'] = 'questions_api/submit_question';
+$route['answer/vote/upvote'] = 'api/Answer/vote';
+$route['answer/vote/downvote'] = 'api/Answer/vote';
+
+
 
 
 
