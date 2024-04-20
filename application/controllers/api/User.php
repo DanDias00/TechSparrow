@@ -44,8 +44,6 @@ class User extends REST_Controller {
 
     // Show registration page
     public function register_post() {
-       // log_message('debug', 'POST Data: ' . print_r($this->input->post(), TRUE));
-
 
          // Set validation rules
         $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]');
@@ -97,9 +95,7 @@ class User extends REST_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-            
-            // Validation failed, load the login view again with errors
-            $this->load->view('users/login');
+
         } else {
             // Validation successful
             $username = $this->input->post('username');
@@ -120,7 +116,7 @@ class User extends REST_Controller {
                 
 
                 $this->session->set_flashdata('user_loggedin', 'You are now logged in.');
-                $this->response(['status' => 'success', 'message' => 'Operation completed.'], REST_Controller::HTTP_OK);
+                $this->response(['status' => 'success', 'message' => $user_data], REST_Controller::HTTP_OK);
 
             } else {
                 // Login failed
@@ -137,27 +133,25 @@ class User extends REST_Controller {
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('username');
-
-        // Set message
-        $this->session->set_flashdata('user_loggedout', 'You are now logged out');
-        redirect('Home/view');
-      
-        
+        $this->session->sess_destroy();
+        log_message('info', 'User logged out');
+        $this->response(['status' => 'success', 'message' => 'logged out.'], REST_Controller::HTTP_OK);
+   
     }
 
     // User profile
-    public function profile() {
+    public function profile_get() {
         // Ensure user is logged in
         if(!$this->session->userdata('logged_in')) {
             log_message('error', 'User not logged in');
-            redirect('users/login');
+            $this->response(['status' => 'error', 'message' => 'registration failed.'], REST_Controller::HTTP_UNAUTHORIZED);
         }
 
         log_message('info', 'User profile accessed: ' . $this->session->userdata('username'));
         // Get user data from model, pass to view
         $data['user'] = $this->user_service->get_user_info($this->session->userdata('user_id'));
         log_message('debug', 'User data: ' . print_r($data['user'], TRUE));
-        $this->load->view('templates/profile', $data);
+        $this->response(['status' => 'success', 'message' => $data['user']], REST_Controller::HTTP_OK);
     }
 
     //password reset
@@ -204,9 +198,39 @@ class User extends REST_Controller {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Failed to reset password.'
-                ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
+                ], REST_Controller::HTTP_BAD_REQUEST);
             }
         }
     }
+
+    public function delete_post() {
+        // Retrieve user ID from the URL segment
+        $user_id = $this->uri->segment(2);
+        log_message('info', 'User ID: ' . $user_id);
+        
+        // Check if user ID is not provided or not numeric
+        if (!$user_id || !is_numeric($user_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Invalid user ID provided.'
+            ], REST_Controller::HTTP_BAD_REQUEST);
+            return;
+        }
+        
+        log_message('info', 'User ID: ' . $user_id);
+        
+        if ($this->user_service->deleteAccountService($user_id)) {
+            $this->response([
+                'status' => TRUE,
+                'message' => 'Account deleted successfully.'
+            ], REST_Controller::HTTP_OK);
+        } else {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Failed to delete account.'
+            ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     
 }
