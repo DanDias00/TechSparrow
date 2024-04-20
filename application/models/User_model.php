@@ -39,6 +39,7 @@ public function get_user_id($username) {
 }
 
 public function get_user_by_id($user_id) {
+    $this->db->select('user_id, username, email'); 
     $this->db->where('user_id', $user_id);
     $result = $this->db->get('users');
 
@@ -48,6 +49,7 @@ public function get_user_by_id($user_id) {
         return null;
     }
 }
+
 public function get_user_by_email($email) {
     $this->db->from('users');
     $this->db->where('email', $email);
@@ -63,6 +65,12 @@ public function get_user_by_email($email) {
 public function update_password($user_id, $password) {
     $this->db->where('user_id', $user_id);
     $this->db->update('users', ['password' => $password]);
+    return $this->db->affected_rows() > 0;
+}
+
+public function deleteAccount($user_id) {
+    $this->db->where('user_id', $user_id);
+    $this->db->delete('users');
     return $this->db->affected_rows() > 0;
 }
 }
