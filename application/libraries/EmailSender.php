@@ -36,7 +36,7 @@ class EmailSender {
 
     // Method to send a registration success email
     public function sendRegistrationSuccessEmail($to, $message) {
-        $subject = 'Registration Confirmation';
+        $subject = 'Registration Success';
         return $this->sendMail($to, $subject, $message);
     }
     public function passwordResetEmail($to, $message) {
