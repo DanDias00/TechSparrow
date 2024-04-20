@@ -1,16 +1,39 @@
 
 <?php
 class Vote_service {
-    protected $vote_model;
+    protected $CI;
 
     public function __construct() {
-        $this->load->model('vote_model');
-        $this->vote_model = new Vote_model();
+        // Get CodeIgniter instance
+        $this->CI =& get_instance();
+
+        // Load the Answer_model
+        $this->CI->load->model('Answer_model');
+        $this->CI->load->model('Vote_model');
     }
 
-    public function submit_vote_service($answer_id, $user_id, $vote) {
-       
-        return $this->vote_model->submit_vote($answer_id, $user_id, $vote);
+    public function upvote($answer_id) {
+        // Use the Answer_model through the CI instance
+        $vote_count = $this->CI->Answer_model->upvote($answer_id);
+
+        // Return the vote count
+        return $vote_count;
     }
+
+    public function downvote($answer_id) {
+    
+       $vote_count= $this->CI->Answer_model->downvote($answer_id);
+         return $vote_count;
+    }
+
+    public function hasVotedService($answer_id, $user_id) {
+        return $this->CI->Vote_model->hasVoted($answer_id, $user_id);
+    }
+
+    public function insertUserVoteService($user_id,$answer_id, $vote) {
+        return $this->CI->Vote_model->saveVoteDetails($user_id,$answer_id, $vote);
+    }
+
+
 }
 ?>
