@@ -13,7 +13,7 @@ class Vote_service {
     }
 
     public function upvote($answer_id) {
-        // Use the Answer_model through the CI instance
+        
         $vote_count = $this->CI->Answer_model->upvote($answer_id);
 
         // Return the vote count

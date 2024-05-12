@@ -31,8 +31,17 @@ class user_service{
     }
 
     public function get_user_info($user_id) {
-        return $this->CI->User_model->get_user_by_id($user_id);
+        $user_data = $this->CI->User_model->get_user_by_id($user_id);
+    
+        // Check if user data exists
+        if ($user_data !== null) {
+            // Add loggedIn field to the user data
+            $user_data->loggedIn = true;
+        }
+    
+        return $user_data;
     }
+    
 
     public function forgotPassword($email) {
         $user = $this->CI->User_model->get_user_by_email($email);
@@ -61,6 +70,10 @@ class user_service{
                 'message' => 'No account found with that email address.'
             ];
         }
+    }
+
+    public function deleteAccountService($user_id) {
+        return $this->CI->User_model->deleteAccount($user_id);
     }
 
 
