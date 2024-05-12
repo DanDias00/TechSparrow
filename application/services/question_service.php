@@ -14,11 +14,11 @@ class question_service{
     public function all_questions_service() {
     
         $questions = $this->CI->Question_model->get_all_questions();
-        //log_message($questions, 'debug');
+       
         $questions_with_answer_count = [];
 
         foreach ($questions as $question) {
-            // Assuming 'id' is the key for question_id in your question array
+            // Getting the question ID
             $question_id = $question['id'];
             // Get the answer count for the current question
             $answer_count = $this->CI->question_service->get_answer_count_service($question_id);
