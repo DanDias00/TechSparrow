@@ -24,6 +24,8 @@ class Questions_api extends REST_Controller {
             header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
             header('Access-Control-Allow-Credentials: true');
             header('Access-Control-Max-Age: 86400');    // cache for 1 day
+          
+
         }
 
         // Access-Control headers are received during OPTIONS requests
@@ -43,8 +45,6 @@ class Questions_api extends REST_Controller {
     }
 
     public function questions_get() {
-
-      
         if (!$this->session->userdata('logged_in')) {
             // User not logged in, send a 401 Unauthorized response and redirect to login
             $this->response([
@@ -96,13 +96,11 @@ class Questions_api extends REST_Controller {
             return;
         }
     
-        // Prepare the data to return
         $data = [
             'question' => $question,
             'answers' => $answers
         ];
     
-        // Respond with 200 OK and the data
         $this->response($data, REST_Controller::HTTP_OK);
     }
 
@@ -112,9 +110,7 @@ class Questions_api extends REST_Controller {
             $this->response('logged in issue',REST_Controller::HTTP_UNAUTHORIZED);
            // redirect('login');
         }
-       
-
-      
+    
             $title = $this->input->post('title');
             $question = $this->input->post('body');
             $tagString = $this->input->post('tags');
@@ -125,13 +121,13 @@ class Questions_api extends REST_Controller {
 
                 $this->session->set_flashdata('question_submitted', 'Question submitted successfully');
                 log_message('info', 'Question submitted successfully');
-                $this->response(REST_Controller::HTTP_OK);
-               // redirect('questions');
+                $this->response(['success'=>'Question submitted successfully'],REST_Controller::HTTP_OK);
+             
             } else {
                 $this->session->set_flashdata('question_failed', 'Failed to submit question');
                 log_message('error', 'Failed to submit question');
-                $this->response(REST_Controller::HTTP_UNAUTHORIZED);
-               // redirect('ask_question');
+                $this->response(['error'=>'Failed to submit question'],REST_Controller::HTTP_UNAUTHORIZED);
+              
             }
         }
 
