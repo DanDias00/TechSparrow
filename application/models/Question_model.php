@@ -21,14 +21,14 @@ public function get_all_questions() {
 
     // Group by question ID to aggregate all tags for each question
     $this->db->group_by('questions.id');
-    $this->db->order_by('questions.created_at', 'DESC'); // Optional: order the questions
+    $this->db->order_by('questions.created_at', 'DESC');
 
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
         $questions = $query->result_array();
         
-        // Process tags to be an array if needed
+        // Processing tags to be an array
         foreach ($questions as &$question) {
             if (!empty($question['tags'])) {
                 $question['tags'] = explode(', ', $question['tags']);
@@ -114,14 +114,14 @@ public function search_questions($search) {
 
     // Group by question ID to aggregate all tags for each question
     $this->db->group_by('questions.id');
-    $this->db->order_by('questions.created_at', 'DESC'); // Optional: order the questions
+    $this->db->order_by('questions.created_at', 'DESC');
 
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
         $questions = $query->result_array();
         
-        // Process tags to be an array if needed
+        // Processing tags to be an array
         foreach ($questions as &$question) {
             if (!empty($question['tags'])) {
                 $question['tags'] = explode(', ', $question['tags']);
