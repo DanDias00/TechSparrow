@@ -95,14 +95,20 @@ class User extends REST_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() === FALSE) {
+            // Validation failed
+            $this->response(['status' => 'error', 'message' => 'validation failed.'], REST_Controller::HTTP_BAD_REQUEST);
 
         } else {
             // Validation successful
             $username = $this->input->post('username');
             $password = $this->input->post('password');
+            if ($username=='' || $password=='') {
+                $this->response(['status' => 'error', 'message' => 'You are banned.'], REST_Controller::HTTP_UNAUTHORIZED);
+            }
             
 
             if ($this->user_service->login($username, $password)) {
+                
                 // Login successful
                 $user_data = [
                     'username' => $username,
@@ -142,7 +148,7 @@ class User extends REST_Controller {
     // User profile
     public function profile_get() {
         // Ensure user is logged in
-        if(!$this->session->userdata('logged_in')) {
+        if(!$this->session->userdata('logged_in')||!$this->session->userdata('user_id') || !$this->session->userdata('username')) {
             log_message('error', 'User not logged in');
             $this->response(['status' => 'error', 'message' => 'registration failed.'], REST_Controller::HTTP_UNAUTHORIZED);
         }
