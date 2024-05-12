@@ -53,39 +53,8 @@ $route['default_controller'] = 'Home/view';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-// Custom routes
-
-
-$route['questions'] = 'Questions/all_questions';
-$route['ask'] = 'Questions/ask_question';
-$route['register'] = 'User/register';
-//$route['submit_question'] = 'Questions/submit_question';
-$route['view_question/(:any)'] = 'Questions/view_question/$1';
-$route['search'] = 'Questions/search';
-$route['user_questions'] = 'Questions/user_questions';
-$route['delete_question/(:any)'] = 'Questions/delete_question/$1';
-$route['update_question/(:any)'] = 'Questions/update_question/$1';
-#$route['Myprofile'] = 'User/profile';
-$route['logout'] = 'User/logout';
-$route['edit_profile'] = 'User/edit_profile';
-$route['update_profile'] = 'User/update_profile';
-$route['submit_comment'] = 'comments/submit_comment';
-$route['submit_answer'] = 'answer/submit';
-
-// Custom routes for header links
-$route['Home'] = 'Home/view';
-$route['contact'] = 'Home/contact';
-$route['privacy'] = 'Home/privacy';
-$route['terms'] = 'Home/terms';
-$route['faq'] = 'Home/faq';
-
-
-
-$route['api/questions'] = 'questions_api/questions';
-$route['api/questions/(:any)'] = 'questions_api/questions/$1';
-$route['answer']  = 'answer/submit';
-
-//for backbone js
+$route['questions'] = 'api/Question/questions';
+$route['api/questions/(:any)'] = 'api/Question/questions/$1';
 $route['profile'] = 'api/User/profile';
 $route['login'] = 'api/User/login';
 $route['register'] = 'api/User/register';
@@ -95,7 +64,7 @@ $route['forgot_password'] = 'api/User/forgot_password';
 $route['reset_password'] ='api/User/reset_password';
 $route['answer'] = 'api/Answer/submit';
 $route['comment'] = 'api/Comments/submit';
-$route['question'] = 'questions_api/submit_question';
+$route['question'] = 'Questions_api/submit_question';
 $route['answer/vote/upvote'] = 'api/Answer/vote';
 $route['answer/vote/downvote'] = 'api/Answer/vote';
 
