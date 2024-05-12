@@ -5,7 +5,6 @@ class Comment_model extends CI_Model {
         $this->load->database();
     }
 
-
     public function save_comment($data) {
       
         return $this->db->insert('comments', $data);
