@@ -33,13 +33,13 @@ class Answer extends REST_Controller {
                 if ($result['success']) {
                     $this->session->set_flashdata('answer_submitted', $result['message']);
                     $this->response(['status' => 'success', 'message' => 'answer submitted.'], REST_Controller::HTTP_OK);
-                    redirect('questions');
+                    
                 } else {
                     $this->session->set_flashdata('answer_error', $result['message']);
                     $this->response(['status' => 'error', 'message' => 'submit failed'], REST_Controller::HTTP_UNAUTHORIZED);
                     
                 }
-                redirect('questions/view_question/' . $question_id);
+                
             }
         }
 

@@ -39,6 +39,6 @@ class Comments extends REST_Controller {
             $this->response(['status' => 'error', 'message' => 'submit failed'], REST_Controller::HTTP_UNAUTHORIZED);
         }
 
-        redirect('questions/view_question/' . $question_id);
+        
     }
 }
