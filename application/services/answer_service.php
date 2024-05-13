@@ -12,17 +12,13 @@ class answer_service{
     }
 
     public function submit_answer($question_id, $answer_body, $user_id) {
-        // Validate input
         if (empty($question_id) || empty($answer_body)) {
             redirect('questions/view_question/' . $question_id);
             return ['success' => false, 'message' => 'Please fill in all fields.'];
         }
 
-        // Save answer and increment answer count
-        
         if ($this->CI->Answer_model->save_answer($question_id, $answer_body, $user_id)) {
-            //increment answer count in questions table
-           // $this->CI->Question_model->increment_answer_count($question_id);
+        
             return ['success' => true, 'message' => 'Your answer has been submitted successfully.'];
         } else {
             return ['success' => false, 'message' => 'There was a problem submitting your answer. Please try again.'];

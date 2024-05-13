@@ -71,8 +71,5 @@ class question_service{
     public function get_answer_count_service($question_id) {
         return $this->CI->Question_model->get_answer_count($question_id);
     }
-
-
-
 }
 ?> 
