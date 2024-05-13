@@ -53,8 +53,8 @@ $route['default_controller'] = 'Home/view';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['questions'] = 'api/Question/questions';
-$route['api/questions/(:any)'] = 'api/Question/questions/$1';
+$route['questions'] = 'api/Questions/questions';
+$route['api/questions/(:any)'] = 'api/Questions/questions/$1';
 $route['profile'] = 'api/User/profile';
 $route['login'] = 'api/User/login';
 $route['register'] = 'api/User/register';
@@ -64,7 +64,7 @@ $route['forgot_password'] = 'api/User/forgot_password';
 $route['reset_password'] ='api/User/reset_password';
 $route['answer'] = 'api/Answer/submit';
 $route['comment'] = 'api/Comments/submit';
-$route['question'] = 'Questions_api/submit_question';
+$route['question'] = 'api/Questions/submit_question';
 $route['answer/vote/upvote'] = 'api/Answer/vote';
 $route['answer/vote/downvote'] = 'api/Answer/vote';
 
