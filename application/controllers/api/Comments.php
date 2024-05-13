@@ -19,7 +19,6 @@ class Comments extends REST_Controller {
 
     public function submit_post() {
         if (!$this->session->userdata('logged_in')) {
-            // Redirect or handle the case where the user is not logged in
             $this->response(['status' => 'error', 'message' => 'not logged in'], REST_Controller::HTTP_UNAUTHORIZED);
             redirect('users/login');
             return;

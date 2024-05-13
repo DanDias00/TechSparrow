@@ -28,7 +28,7 @@ public function get_all_questions() {
     if ($query->num_rows() > 0) {
         $questions = $query->result_array();
         
-        // Processing tags to be an array
+        // tag processing to be an array
         foreach ($questions as &$question) {
             if (!empty($question['tags'])) {
                 $question['tags'] = explode(', ', $question['tags']);
@@ -102,11 +102,11 @@ public function search_questions($search) {
     $this->db->from('questions');
     $this->db->join('users', 'users.user_id = questions.user_id');
 
-    // Join with the question_tags intermediate table and then tags table to get the tags
+    // Join with the question_tags table and then tags table to get the tags
     $this->db->join('question_tags', 'question_tags.question_id = questions.id', 'left');
     $this->db->join('tags', 'tags.id = question_tags.tag_id', 'left');
 
-    // Apply the search condition to the title and body fields
+    // Applying the search condition to the title and body fields
     $this->db->group_start(); // Start grouping for OR condition
     $this->db->like('questions.title', $search);
     $this->db->or_like('questions.body', $search);
@@ -173,7 +173,5 @@ public function get_answer_count($question_id) {
         return 0; // Return 0 if no answers are found
     }
 }
-
 }
-
 ?>

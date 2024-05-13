@@ -43,7 +43,6 @@ class Answer extends REST_Controller {
             }
         }
 
-
         public function vote_post() {
             if (!$this->session->userdata('logged_in')) {
                 $this->response(['status' => 'error', 'message' => 'User not logged in'], REST_Controller::HTTP_UNAUTHORIZED);
@@ -57,8 +56,6 @@ class Answer extends REST_Controller {
             log_message('debug', 'Vote type: ' . $type);
             log_message('debug', 'User ID: ' . $user_id);
           
-
-            // Check if the user has already voted on this answer
             if ($this->vote_service->hasVotedService($answer_id, $user_id)) {
                 $this->response(['status' => 'error', 'message' => 'User has already voted on this answer'], REST_Controller::HTTP_BAD_REQUEST);
                 return;
