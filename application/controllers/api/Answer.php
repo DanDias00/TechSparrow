@@ -1,10 +1,12 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
 use Restserver\Libraries\REST_Controller;
+
 class Answer extends REST_Controller {
 
     public function __construct() {
@@ -50,7 +52,7 @@ class Answer extends REST_Controller {
             }
             $answer_id = $this->post('answer_id');
             $user_id = $this->post('user_id');
-            $type = $this->uri->segment(3);
+            $type = $this->uri->segment(4);
           
             log_message('debug', 'Answer ID: ' . $answer_id);
             log_message('debug', 'Vote type: ' . $type);
