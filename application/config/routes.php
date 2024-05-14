@@ -53,20 +53,24 @@ $route['default_controller'] = 'Home/view';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['questions'] = 'api/Questions/questions';
-$route['api/questions/(:any)'] = 'api/Questions/questions/$1';
-$route['profile'] = 'api/User/profile';
-$route['login'] = 'api/User/login';
-$route['register'] = 'api/User/register';
-$route['logout'] = 'api/User/logout';
-$route['delete_account/(:num)'] = 'api/User/delete/$1';
-$route['forgot_password'] = 'api/User/forgot_password';
-$route['reset_password'] ='api/User/reset_password';
-$route['answer'] = 'api/Answer/submit';
-$route['comment'] = 'api/Comments/submit';
-$route['question'] = 'api/Questions/submit_question';
-$route['answer/vote/upvote'] = 'api/Answer/vote';
-$route['answer/vote/downvote'] = 'api/Answer/vote';
+$route['api/auth/profile'] = 'api/User/profile';
+$route['api/auth/login'] = 'api/User/login';
+$route['api/auth/register'] = 'api/User/register';
+$route['api/auth/logout'] = 'api/User/logout';
+$route['api/auth/delete_account/(:num)'] = 'api/User/delete/$1';
+$route['api/auth/forgot_password'] = 'api/User/forgot_password';
+$route['api/auth/reset_password'] ='api/User/reset_password';
+
+$route['api/questions'] = 'api/Questions/questions';
+$route['api/question/(:num)'] = 'api/Questions/view_question/$1';
+$route['api/question'] = 'api/Questions/submit_question';
+$route['api/question/search'] = 'api/Questions/search';
+
+$route['api/answer'] = 'api/Answer/submit';
+$route['api/answer/vote/upvote'] = 'api/Answer/vote';
+$route['api/answer/vote/downvote'] = 'api/Answer/vote';
+
+$route['api/comment'] = 'api/Comments/submit';
 
 
 
