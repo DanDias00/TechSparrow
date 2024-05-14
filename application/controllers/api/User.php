@@ -143,14 +143,17 @@ class User extends REST_Controller {
         // Ensure user is logged in
         if(!$this->session->userdata('logged_in')||!$this->session->userdata('user_id') || !$this->session->userdata('username')) {
             log_message('error', 'User not logged in');
-            $this->response(['status' => 'error', 'message' => 'registration failed.'], REST_Controller::HTTP_UNAUTHORIZED);
-        }
+            $this->response(['status' => 'error', 'message' => ' No active user.'], REST_Controller::HTTP_UNAUTHORIZED);
+        }else{
 
         log_message('info', 'User profile accessed: ' . $this->session->userdata('username'));
         // Get user data from model, pass to view
         $data['user'] = $this->user_service->get_user_info($this->session->userdata('user_id'));
+      
+  
         log_message('debug', 'User data: ' . print_r($data['user'], TRUE));
         $this->response(['status' => 'success', 'message' => $data['user']], REST_Controller::HTTP_OK);
+        }
     }
 
     //password reset
@@ -204,7 +207,7 @@ class User extends REST_Controller {
 
     public function delete_post() {
         // Retrieve user ID from the URL segment
-        $user_id = $this->uri->segment(2);
+        $user_id = $this->uri->segment(4);
         log_message('info', 'User ID: ' . $user_id);
         
         // Check if user ID is not provided or not numeric
