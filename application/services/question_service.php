@@ -4,7 +4,7 @@ class question_service{
     protected $CI;
 
     public function __construct() {
-        $this->CI =& get_instance(); // Access the CI superobject
+        $this->CI =& get_instance();
         $this->CI->load->model('Question_model');
         $this->CI->load->service('answer_service', '', TRUE);
         $this->CI->load->service('question_service', '', TRUE);
@@ -60,16 +60,21 @@ class question_service{
         return $this->CI->Question_model->get_user_questions($user_id);
     }
 
-    public function delete_question_service($question_id) {
-        return $this->CI->Question_model->delete_question($question_id);
-    }
-
-    public function update_question_service($question_id, $question) {
-        return $this->CI->Question_model->update_question($question_id, $question);
-    }
 
     public function get_answer_count_service($question_id) {
         return $this->CI->Question_model->get_answer_count($question_id);
+    }
+
+    public function get_questions_by_user_id_service($user_id) {
+        return $this->CI->Question_model->get_questions_by_user_id($user_id);
+       
+    }
+
+    public function delete_question_service($question_id) {
+        return $this->CI->Question_model->delete_question($question_id);
+    }
+    public function update_question_service ($question_id, $title, $body) {
+        return $this->CI->Question_model->update_question($question_id, $title, $body);
     }
 }
 ?> 
