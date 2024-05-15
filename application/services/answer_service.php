@@ -13,7 +13,6 @@ class answer_service{
 
     public function submit_answer($question_id, $answer_body, $user_id) {
         if (empty($question_id) || empty($answer_body)) {
-            redirect('questions/view_question/' . $question_id);
             return ['success' => false, 'message' => 'Please fill in all fields.'];
         }
 
@@ -43,9 +42,6 @@ class answer_service{
         }
     
         return $answers_with_comments;
-    }
-    
-
-  
+    }  
 }
 ?>

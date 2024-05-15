@@ -42,8 +42,6 @@ public function get_all_questions() {
     }
 }
 
-    
-
 public function get_question($question_id) {
     // Fetch the question details
     $query = $this->db->get_where('questions', array('id' => $question_id));
@@ -148,10 +146,8 @@ public function delete_question($question_id) {
 
   
     if ($this->db->affected_rows() > 0) {
-
         return true;
     } else {
-  
         return false;
     }
 }
@@ -205,7 +201,5 @@ public function update_question($question_id, $title, $body) {
         return false;
     }
 }
-
-
 }
 ?>

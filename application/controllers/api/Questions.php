@@ -125,7 +125,7 @@ class Questions extends REST_Controller {
     public function submit_question_post(){
       
         if (!$this->session->userdata('logged_in')) {
-            $this->response('logged in issue',REST_Controller::HTTP_UNAUTHORIZED);
+            $this->response('user not logged in',REST_Controller::HTTP_UNAUTHORIZED);
          
         }
     
@@ -137,18 +137,15 @@ class Questions extends REST_Controller {
 
             if ($this->question_service->submit_question_service($title,$question, $user_id,$tags)) {
 
-                $this->session->set_flashdata('question_submitted', 'Question submitted successfully');
                 log_message('info', 'Question submitted successfully');
                 $this->response(['success'=>'Question submitted successfully'],REST_Controller::HTTP_OK);
              
             } else {
-                $this->session->set_flashdata('question_failed', 'Failed to submit question');
                 log_message('error', 'Failed to submit question');
                 $this->response(['error'=>'Failed to submit question'],REST_Controller::HTTP_UNAUTHORIZED);
               
             }
         }
-
 
         public function search_get() {
         
@@ -175,7 +172,6 @@ class Questions extends REST_Controller {
           
             $questions = $this->question_service->search_questions_service($search);
             if($questions) {
-              
                 $this->response( $questions, REST_Controller::HTTP_OK);
             } else {
                
@@ -207,7 +203,6 @@ class Questions extends REST_Controller {
             } else {
                 $this->response([
                     'status' => FALSE,
-            
                     'message' => 'Failed to delete question'    
                 ], REST_Controller::HTTP_UNAUTHORIZED);
             }

@@ -67,7 +67,6 @@ public function downvote($answer_id) {
     }
 
 }
-
 public function get_vote_count($answer_id) {
     $query = $this->db->get_where('answers', array('id' => $answer_id));
     if ($query->num_rows() > 0) {

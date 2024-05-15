@@ -57,21 +57,15 @@ class User extends REST_Controller {
                 $userEmail = $this->input->post('email');
                 if ($this->emailsender->sendRegistrationSuccessEmail($userEmail,$emailContent)) {
                     log_message('info', 'Registration email sent to ' . $userEmail);
-                    $this->session->set_flashdata('email_sent', 'Registration successful. Please check your email for confirmation.');
                     $this->response(['status' => 'success', 'message' => 'email sent.'], REST_Controller::HTTP_OK);
                 } else {
-                    $this->session->set_flashdata('email_failed', 'Registration successful. However, we were unable to send a confirmation email.');
                     log_message('error', 'Failed to send registration email to ' . $userEmail);
-                    $this->response(['status' => 'error', 'message' => 'Operation completed.'], REST_Controller::HTTP_BAD_REQUEST);
+                    $this->response(['status' => 'error', 'message' => 'Registration successful. However, we were unable to send a confirmation email.'], REST_Controller::HTTP_BAD_REQUEST);
                 }
-
-                // Registration success
-                $this->session->set_flashdata('user_registered', 'You are now registered and can log in');
                 log_message('info', 'User registered: ' . $this->input->post('username'));
                 
             } else {
                 // Registration failed
-                $this->session->set_flashdata('registration_failed', 'Registration failed. Please try again.');
                 $this->response(['status' => 'error', 'message' => 'registration failed.'], REST_Controller::HTTP_BAD_REQUEST);
                 
             }
@@ -99,7 +93,6 @@ class User extends REST_Controller {
                 $this->response(['status' => 'error', 'message' => 'You are banned.'], REST_Controller::HTTP_UNAUTHORIZED);
             }
             
-
             if ($this->user_service->login($username, $password)) {
                 
                 // Login successful
@@ -113,13 +106,10 @@ class User extends REST_Controller {
                 log_message('info', 'User logged in: ' .  $this->session->userdata('username'));
                 log_message('info', 'logged in: ' .  $this->session->userdata('logged_in'));
                 
-
-                $this->session->set_flashdata('user_loggedin', 'You are now logged in.');
                 $this->response(['status' => 'success', 'message' => $user_data], REST_Controller::HTTP_OK);
 
             } else {
                 // Login failed
-                $this->session->set_flashdata('login_failed', 'Login is invalid. Please check your username and password.');
                 $this->response(['status' => 'error', 'message' => 'Authentication failed. Invalid username or password.'], REST_Controller::HTTP_UNAUTHORIZED);
 
                 }
@@ -145,12 +135,9 @@ class User extends REST_Controller {
             log_message('error', 'User not logged in');
             $this->response(['status' => 'error', 'message' => ' No active user.'], REST_Controller::HTTP_UNAUTHORIZED);
         }else{
-
         log_message('info', 'User profile accessed: ' . $this->session->userdata('username'));
         // Get user data from model, pass to view
         $data['user'] = $this->user_service->get_user_info($this->session->userdata('user_id'));
-      
-  
         log_message('debug', 'User data: ' . print_r($data['user'], TRUE));
         $this->response(['status' => 'success', 'message' => $data['user']], REST_Controller::HTTP_OK);
         }
@@ -168,7 +155,7 @@ class User extends REST_Controller {
         } else {
             $email = $this->input->post('email');
             $result = $this->user_service->forgotPassword($email);
-            $this->response($result, $result['status'] ? REST_Controller::HTTP_OK : REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
+            $this->response($result, $result['status'] ? REST_Controller::HTTP_OK : REST_Controller::HTTP);
         }
     }
 
@@ -232,7 +219,5 @@ class User extends REST_Controller {
                 'message' => 'Failed to delete account.'
             ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
-    }
-    
-    
+    } 
 }
