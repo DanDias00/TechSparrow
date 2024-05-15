@@ -27,18 +27,16 @@ class Answer extends REST_Controller {
             $user_id = $this->session->userdata('user_id');
 
             if (!$this->session->userdata('logged_in')) {
-                redirect('login');
+                $this->response(['status' => 'error', 'message' => 'user not logged in'], REST_Controller::HTTP_UNAUTHORIZED);
             } else {
-            
                 $result = $this->answer_service->submit_answer($question_id, $answer_body, $user_id);
-
                 if ($result['success']) {
                     $this->session->set_flashdata('answer_submitted', $result['message']);
                     $this->response(['status' => 'success', 'message' => 'answer submitted.'], REST_Controller::HTTP_OK);
                     
                 } else {
                     $this->session->set_flashdata('answer_error', $result['message']);
-                    $this->response(['status' => 'error', 'message' => 'submit failed'], REST_Controller::HTTP_UNAUTHORIZED);
+                    $this->response(['status' => 'error', 'message' => 'submit failed'], REST_Controller::HTTP_BAD_REQUEST);
                     
                 }
                 
@@ -89,8 +87,6 @@ class Answer extends REST_Controller {
             } else {
                 $this->response(['status' => 'error', 'message' => 'Voting failed'], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
             }
-        }
-        
-          
+        }      
     }
         

@@ -1,7 +1,10 @@
 <?php
 class Vote_model extends CI_Model {
+    
+public function __construct() {
+    $this->load->database();
+}
 
-// Method to add or update a vote
 public function submit_vote($answer_id, $user_id, $vote) {
     // Check if the user has already voted on this answer
     $this->db->where('answer_id', $answer_id);
@@ -21,7 +24,6 @@ public function submit_vote($answer_id, $user_id, $vote) {
         ]);
     }    
 }
-
 
 public function hasVoted($answer_id, $user_id) {
     $this->db->where('answer_id', $answer_id);

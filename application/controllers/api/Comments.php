@@ -20,7 +20,6 @@ class Comments extends REST_Controller {
     public function submit_post() {
         if (!$this->session->userdata('logged_in')) {
             $this->response(['status' => 'error', 'message' => 'not logged in'], REST_Controller::HTTP_UNAUTHORIZED);
-            redirect('users/login');
             return;
         }
 
@@ -31,8 +30,14 @@ class Comments extends REST_Controller {
     
 
         if (!empty($body)||!empty($answer_id)||!empty($user_id)) {
-            $this->comment_service->add_comment_service($answer_id, $user_id, $body);
-            $this->response(['status' => 'success', 'message' => 'comment submitted.'], REST_Controller::HTTP_OK);
+            
+            $result = $this->comment_service->add_comment_service($answer_id, $user_id, $body);
+            
+            if ($result) {
+                $this->response(['status' => 'success', 'message' => 'comment submitted.'], REST_Controller::HTTP_OK);
+            } else {
+                $this->response(['status' => 'error', 'message' => 'submit failed'], REST_Controller::HTTP_BAD_REQUEST);
+            }
     
         }else{
             $this->response(['status' => 'error', 'message' => 'submit failed'], REST_Controller::HTTP_UNAUTHORIZED);

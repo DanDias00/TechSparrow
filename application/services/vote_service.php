@@ -4,10 +4,9 @@ class Vote_service {
     protected $CI;
 
     public function __construct() {
-        // Get CodeIgniter instance
+
         $this->CI =& get_instance();
 
-        // Load the Answer_model
         $this->CI->load->model('Answer_model');
         $this->CI->load->model('Vote_model');
     }
