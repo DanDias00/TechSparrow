@@ -28,7 +28,6 @@ class Questions extends REST_Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-                // may also be using PUT, PATCH, HEAD etc
                 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
@@ -42,7 +41,6 @@ class Questions extends REST_Controller {
 
     public function questions_get() {
         if (!$this->session->userdata('logged_in')) {
-            // User not logged in, send a 401 Unauthorized response and redirect to login
             $this->response([
                 'status' => FALSE,
                 'message' => 'User not logged in',
@@ -99,6 +97,30 @@ class Questions extends REST_Controller {
     
         $this->response($data, REST_Controller::HTTP_OK);
     }
+
+
+    public function questions_by_user_get($user_id) {
+        if (!$this->session->userdata('logged_in')) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'User not logged in'
+            ], REST_Controller::HTTP_UNAUTHORIZED);
+            return;
+        }
+    
+        $questions = $this->question_service->get_questions_by_user_id_service($user_id);
+    
+        // Checking if questions were successfully retrieved
+        if ($questions) {
+            $this->response($questions, REST_Controller::HTTP_OK);
+        } else {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'No questions found for this user'
+            ], REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+    
 
     public function submit_question_post(){
       
@@ -163,8 +185,75 @@ class Questions extends REST_Controller {
                 ], REST_Controller::HTTP_NOT_FOUND);
             }
         }
-    }
+
+        public function delete_question_delete($question_id) {
+            // Check if the user is logged in
+            if (!$this->session->userdata('logged_in')) {
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'User not logged in'
+                ], REST_Controller::HTTP_UNAUTHORIZED);
+                return;
+            }
+    
+            $deleted = $this->question_service->delete_question_service($question_id);
         
+            // Check if the question was successfully deleted
+            if ($deleted) {
+                $this->response([
+                    'status' => TRUE,
+                    'message' => 'Question deleted successfully'
+                ], REST_Controller::HTTP_OK);
+            } else {
+                $this->response([
+                    'status' => FALSE,
+            
+                    'message' => 'Failed to delete question'    
+                ], REST_Controller::HTTP_UNAUTHORIZED);
+            }
+    }
+
+    public function update_question_put($question_id) {
+        // Check if the user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'User not logged in'
+            ], REST_Controller::HTTP_UNAUTHORIZED);
+            return;
+        }
+    
+        $title = $this->put('title');
+        $body = $this->put('body');
+
+        //check if the title and body are empty
+        if(empty($title) || empty($body)){
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Title or body cannot be empty'
+            ], REST_Controller::HTTP_BAD_REQUEST);
+            return;
+        }
+       
+        $updated = $this->question_service->update_question_service($question_id, $title, $body);
+    
+        // Check if the question was successfully updated
+        if ($updated) {
+            $this->response([
+                'status' => TRUE,
+                'message' => 'Question updated successfully'
+            ], REST_Controller::HTTP_OK);
+        } else {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Failed to update question'
+            ], REST_Controller::HTTP_UNAUTHORIZED);
+        }
+    }
+    
+}
+        
+    
 
     
     
