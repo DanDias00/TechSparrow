@@ -144,16 +144,18 @@ public function get_user_questions($user_id) {
 
 public function delete_question($question_id) {
     $this->db->where('id', $question_id);
-    return $this->db->delete('questions');
+    $this->db->delete('questions');
+
+  
+    if ($this->db->affected_rows() > 0) {
+
+        return true;
+    } else {
+  
+        return false;
+    }
 }
 
-public function update_question($question_id, $question) {
-    $data = array(
-        'question' => $question
-    );
-    $this->db->where('id', $question_id);
-    return $this->db->update('questions', $data);
-}
 
 public function increment_answer_count($question_id) {
     $this->db->set('answer_count', 'answer_count+1', FALSE);
@@ -170,8 +172,40 @@ public function get_answer_count($question_id) {
     if ($query->num_rows() > 0) {
         return $query->row()->answer_count; // Return the answer count
     } else {
-        return 0; // Return 0 if no answers are found
+        return 0; 
     }
 }
+
+public function get_questions_by_user_id($user_id) {
+    // Selects only the 'title' and 'body' columns
+    $this->db->select('id,title, body');
+
+    // Orders the result by the 'created_at' column in descending order
+    $this->db->order_by('created_at', 'DESC');
+
+    // Retrieves rows from the 'questions' table where 'user_id' matches the provided $user_id
+    $query = $this->db->get_where('questions', array('user_id' => $user_id));
+
+    // Returns the result as an array of rows
+    return $query->result_array();
+}
+
+public function update_question($question_id, $title, $body) {
+    $data = array(
+        'title' => $title,
+        'body' => $body
+    );
+
+    $this->db->where('id', $question_id);
+    $this->db->update('questions', $data);
+
+    if ($this->db->affected_rows() > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 }
 ?>
