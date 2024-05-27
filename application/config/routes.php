@@ -49,6 +49,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'Home/view';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['api/auth/profile'] = 'api/User/profile';
+$route['api/auth/login'] = 'api/User/login';
+$route['api/auth/register'] = 'api/User/register';
+$route['api/auth/logout'] = 'api/User/logout';
+$route['api/auth/delete_account/(:num)'] = 'api/User/delete/$1';
+$route['api/auth/forgot_password'] = 'api/User/forgot_password';
+$route['api/auth/reset_password'] ='api/User/reset_password';
+
+$route['api/questions'] = 'api/Questions/questions';
+$route['api/question/(:num)'] = 'api/Questions/view_question/$1';
+$route['api/question'] = 'api/Questions/submit_question';
+$route['api/question/search'] = 'api/Questions/search';
+$route['api/questions/user/(:num)'] = 'api/Questions/questions_by_user/$1';
+$route['api/question/delete/(:num)'] = 'api/Questions/delete_question/$1';
+$route['api/question/update/(:num)'] = 'api/Questions/update_question/$1';
+
+$route['api/answer'] = 'api/Answer/submit';
+$route['api/answer/vote/upvote'] = 'api/Answer/vote';
+$route['api/answer/vote/downvote'] = 'api/Answer/vote';
+
+$route['api/comment'] = 'api/Comments/submit';
+
+
+
+
+
+
+
+
+
+
